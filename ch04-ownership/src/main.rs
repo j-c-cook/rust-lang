@@ -10,7 +10,7 @@ fn main() {
     let y = x; // copy 5
 
     let s1 = String::from("Hello");
-    let s2 = s1;  // call s1.drop() and give ownership to s2 (i.e. move)
+    let mut s2 = s1;  // call s1.drop() and give ownership to s2 (i.e. move)
 
     // Clone
     let s3 = s2.clone();
@@ -28,8 +28,17 @@ fn main() {
     let (_s2, _len) = calc_length(s5);
 
     // 4.2 REFERENCES
-    // TODO: Continue here
+    let _size: usize = calc_length_2(&s2); // pass by ref
 
+    change(&mut s2);  // mutable reference
+
+    // The Rust compiler allows infinite share by reference on immutable (read0-only)
+    // The Rust compiler only allows one share by reference on mutable (read and write) at a time
+    /**
+        Notes: I'm assuming Rust does have the ability to share a mutable reference to
+               more than one location, but requires thread safety to be implemented
+               (e.g. semaphore).
+    */
 
 }
 
@@ -56,4 +65,12 @@ fn calc_length(s: String) -> (String, usize) {
     let length = s.len();
 
     (s, length)
+}
+
+fn calc_length_2(s: &String) -> usize {
+    s.len()
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
 }
