@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "ch05-sructs"
+name = "ch05-structs"
 version = "0.1.0"
