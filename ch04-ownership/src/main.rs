@@ -34,11 +34,23 @@ fn main() {
 
     // The Rust compiler allows infinite share by reference on immutable (read0-only)
     // The Rust compiler only allows one share by reference on mutable (read and write) at a time
-    /**
+    /*
         Notes: I'm assuming Rust does have the ability to share a mutable reference to
                more than one location, but requires thread safety to be implemented
                (e.g. semaphore).
     */
+
+    // 4.3 SLICE TYPE
+    // A slice is a kind of reference, so it does not have ownership.
+    // String slice
+    let sentence: String = String::from("Moose chased after the ball.");
+    let word = first_word(&sentence);
+    println!("The first word is: {word}");
+
+    // List slice
+    let a = [1, 2, 3, 4, 5];
+    let slice = &a[1..3];
+    assert_eq!(slice, &[2, 3]);
 
 }
 
@@ -73,4 +85,16 @@ fn calc_length_2(s: &String) -> usize {
 
 fn change(some_string: &mut String) {
     some_string.push_str(", world");
+}
+
+fn first_word(s: &str) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+   return &s[..]
 }
