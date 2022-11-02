@@ -19,6 +19,34 @@ impl Message {
     }
 }
 
+#[derive(Debug)]
+enum UsState {
+    Alabama,
+    Alaska,
+}
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState), // Pattern that binds to value
+}
+
+// The match control flow construct
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => {
+            println!("Lucky penny!");
+            1
+        }
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) {
+            println!("State quarter from {:?}!", state);
+            25
+        }
+    }
+}
 
 fn main() {
     // Enum values
@@ -43,6 +71,6 @@ fn main() {
 
     // Option API documentation: https://doc.rust-lang.org/std/option/enum.Option.html
 
-    // The match control flow construct
-    // TODO: continue here -> https://doc.rust-lang.org/book/ch06-02-match.html#the-match-control-flow-construct
+    // Matching with Option<T>
+    // https://doc.rust-lang.org/book/ch06-02-match.html#matching-with-optiont
 }
