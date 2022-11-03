@@ -41,7 +41,7 @@ fn value_in_cents(coin: Coin) -> u8 {
         }
         Coin::Nickel => 5,
         Coin::Dime => 10,
-        Coin::Quarter(state) {
+        Coin::Quarter(state) => {
             println!("State quarter from {:?}!", state);
             25
         }
@@ -71,6 +71,20 @@ fn main() {
 
     // Option API documentation: https://doc.rust-lang.org/std/option/enum.Option.html
 
+    let qt = Coin::Quarter(UsState::Alaska);
+    value_in_cents(qt);
+
     // Matching with Option<T>
-    // https://doc.rust-lang.org/book/ch06-02-match.html#matching-with-optiont
+    fn plus_one(x: Option<i32>) -> Option<i32> {
+        match x {
+            None => None,
+            Some(i) => Some(i + 1)
+        }
+    }
+
+    let five = Some(5);
+    let _six = plus_one(five);
+    let _none = plus_one(None);
+
+    // TODO: https://doc.rust-lang.org/book/ch06-02-match.html#catch-all-patterns-and-the-_-placeholder
 }
