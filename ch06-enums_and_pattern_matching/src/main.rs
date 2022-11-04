@@ -33,7 +33,7 @@ enum Coin {
 }
 
 // The match control flow construct
-fn value_in_cents(coin: Coin) -> u8 {
+fn value_in_cents(coin: &Coin) -> u8 {
     match coin {
         Coin::Penny => {
             println!("Lucky penny!");
@@ -72,7 +72,7 @@ fn main() {
     // Option API documentation: https://doc.rust-lang.org/std/option/enum.Option.html
 
     let qt = Coin::Quarter(UsState::Alaska);
-    value_in_cents(qt);
+    value_in_cents(&qt);
 
     // Matching with Option<T>
     fn plus_one(x: Option<i32>) -> Option<i32> {
@@ -86,5 +86,30 @@ fn main() {
     let _six = plus_one(five);
     let _none = plus_one(None);
 
-    // TODO: https://doc.rust-lang.org/book/ch06-02-match.html#catch-all-patterns-and-the-_-placeholder
+    // Catch-all patterns and the _ placeholder
+    fn add_fancy_hat() {}
+    fn remove_fancy_hat() {}
+    fn move_player(num_spaces: u8) {}
+
+    let dice_roll = 9;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        other => move_player(other),
+        // _ => re_roll()
+    } // dice_roll
+
+    // Concise control flow with if let
+    let config_max = Some(3u8);
+    if let Some(max) = config_max {
+        println!("The maximum is configured to be {}", max);
+    }
+
+    let mut count = 0;
+    if let Coin::Quarter(state) = qt {
+        println!("State quarter from {:?}!", state);
+    } else {
+        count += 1;
+    } // fi
+
 }
